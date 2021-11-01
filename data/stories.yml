@@ -1,0 +1,85 @@
+version: "2.0"
+
+stories:
+
+- story: say goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: bot challenge
+  steps: 
+    - intent: bot_challenge
+    - action: utter_iamabot
+
+- story: survey happy path
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: affirm
+    - action: health_form
+    - action: utter_slots_values
+    - intent: thankyou
+    - action: utter_no_worries
+    - action: utter_goodbye
+
+- story: survey stop
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: affirm
+    - action: health_form
+    - intent: out_of_scope
+    - action: utter_ask_continue
+    - intent: deny
+    - action: action_deactivate_loop
+    - action: utter_goodbye
+
+- story: survey continue
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: affirm
+    - action: health_form
+    - intent: out_of_scope
+    - action: utter_ask_continue
+    - intent: affirm
+    - action: health_form
+    - action: utter_slots_values
+
+- story: no survey
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: deny
+    - action: utter_goodbye
+
+- story: ask health questions
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: affirm
+    - action: health_form
+    - intent: ask_exercise
+    - action: utter_exercise_info
+    - action: health_form
+    - action: utter_goodbye
+
+- story: ask diet questions
+  steps:
+  - intent: ask_eat_healthy
+  - action: utter_diet_info
+
+- story: ask stress questions
+  steps:
+  - intent: ask_lower_stress
+  - action: utter_stress_info
+
+- story: ask exercise questions
+  steps:
+  - intent: ask_exercise
+  - action: utter_exercise_info
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet

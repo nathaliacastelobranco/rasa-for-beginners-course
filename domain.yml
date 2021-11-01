@@ -1,0 +1,115 @@
+version: '2.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- greet
+- goodbye
+- affirm
+- deny
+- bot_challenge
+- ask_lower_stress
+- ask_eat_healthy
+- ask_exercise
+- inform
+- out_of_scope
+- thankyou
+entities:
+- exercise
+- sleep
+- stress
+# for slots who have entity with the same name, when the entity is detected, the slot auto fill. the default for auto_fill is true.
+slots:
+  confirm_exercise:
+    type: text
+    # slot types:
+    # text - boolean - 
+    # categorical (values)
+    # float (numerical values, min_value, max_value)
+    # list (the values don't influence conversation, the existence of the list does)
+    # any (any arbitrary values, the best to simple store values) 
+    auto_fill: false
+    influence_conversation: false
+    # aditional config - initial_value
+  exercise:
+    type: text
+    auto_fill: true
+    influence_conversation: false
+  sleep:
+    type: text
+    auto_fill: true
+    influence_conversation: false
+  diet:
+    type: text
+    auto_fill: false
+    influence_conversation: false
+  stress:
+    type: text
+    auto_fill: true
+    influence_conversation: false
+  goal:
+    type: text
+    auto_fill: false
+    influence_conversation: false
+responses:
+  utter_greet:
+  - text: Hi! It's time for your daily wellness check. Tracking healthy habits is a great way to measuse your progress over time. Would you like to answer a few questions about your health?
+  utter_did_that_help:
+  - text: Did that help you?
+  utter_happy:
+  - text: Great, carry on!
+  utter_goodbye:
+  - text: Bye
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_stress_info:
+  - text: It's ok to feel overwheelmed at times. Try to set realistic expectations and exercise time manage techniques, like dividing large tasks into more manageble pieces. Relaxation techniques, like deep breathing and meditation, can also be beneficial
+  utter_exercise_info:
+  - text: Most healthy adults should aim to get about 150 min of moderate exercise per week. This includes activities like a brisk walk or yard work.
+  utter_diet_info:
+  - text: A healthy diet includes fruits and vegetables, whole grains, lean protein, and plant-based fats. While there is room in a healthy diet for treats, added sugar should be eaten sparingly. Aim for a variety of foods, and balance.
+  utter_ask_confirm_exercise:
+  - text: Did you exercise yesterday? Don't weat it if you didn't run a marathon - walks count!
+  utter_ask_sleep:
+  - text: How much sleep did you get last night?
+  utter_ask_exercise:
+  - text: What kind of exercise did you do?
+  utter_ask_diet:
+  - text: Did you stick to a healthy diet yesterday?
+  utter_ask_stress:
+  - text: Is your stress level low, medium, or high?
+  utter_ask_goal:
+  - text: Setting goals - even small ones - is a great way to focus your day. What do you wnat to accomplish today?
+  utter_slots_values:
+  - text: |-
+      Here's your daily wellness log:
+       - Exercised? :{confirm_exercise}
+       - Type of exercise: {exercise}
+       - Sleep: {sleep}
+       - Stuck to a healthy diet?: {diet}
+       - Stress level: {stress}
+       - Goal: {goal}
+  utter_no_worries:
+  - text: No problem :)
+  utter_ask_continue:
+  - text: Sorry, I don't quite understand. Do you want to continue?
+actions:
+- utter_greet
+forms:
+  health_form:
+    required_slots:
+      confirm_exercise:
+      - type: from_text
+      exercise:
+      - type: from_entity
+        entity: exercise
+      sleep:
+      - type: from_entity
+        entity: sleep
+      diet:
+      - type: from_text
+      stress:
+      - type: from_entity
+        entity: stress
+      goal:
+      - type: from_text
